@@ -1,57 +1,57 @@
 name: Build
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_dispatch:
 
 jobs:
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
+    build-windows:
+        runs-on: windows-latest
+        steps:
+        - uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 7.0.x
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+              dotnet-version: 7.0.x
 
-    - name: Restore tools
-      run: dotnet tool restore
+        - name: Restore tools
+          run: dotnet tool restore
 
-    - name: Run Cake script
-      run: dotnet cake ./build.cake --Target Test
+        - name: Run Cake script
+          run: dotnet cake ./build.cake --Target Test
   
-#   build-macos:
-#     runs-on: macos-latest
-#     steps:
-#     - uses: actions/checkout@v2
+    # build-macos:
+    #   runs-on: macos-latest
+    #   steps:
+    #   - uses: actions/checkout@v2
 
-#     - name: Setup .NET
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 6.0.x
+    #   - name: Setup .NET
+    #     uses: actions/setup-dotnet@v1
+    #     with:
+    #       dotnet-version: 6.0.x
 
-#     - name: Cake Action
-#       uses: cake-build/cake-action@v1.4.0
-#       with:
-#         target: Test
+    #   - name: Cake Action
+    #     uses: cake-build/cake-action@v1.4.0
+    #     with:
+    #       target: Test
 
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+    build-linux:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 7.0.x
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+              dotnet-version: 7.0.x
 
-    - name: Restore tools
-      run: dotnet tool restore
+      - name: Restore tools
+        run: dotnet tool restore
 
-    - name: Run Cake script
-      run: dotnet cake ./build.cake --Target Test
+      - name: Run Cake script
+        run: dotnet cake ./build.cake --Target Test
