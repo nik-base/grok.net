@@ -1,28 +1,28 @@
 name: PR Audit
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_dispatch:
 
 jobs:
+    editorconfig:
+        runs-on: ubuntu-latest
+        steps:
 
-  editorconfig:
-    runs-on: ubuntu-latest
-    steps:
+        - name: CheckoutCode
+          uses: actions/checkout@v2
+        
+        - name: Configure safe.directory  # Workaround permission issue
+          run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-    - name: CheckoutCode
-      uses: actions/checkout@v2
-    
-    - name: Configure safe.directory  # Workaround permission issue
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-    - name: EditorConfig-Action
-      uses: FarzamMohammadi/EditorConfig-Action@master
-      env:
-        # Only lint files changed in pull request
-        ALWAYS_LINT_ALL_FILES: false
-        # Automatic error fixing not yet supported by EditorConfig-Action
-        # Forced off to avoid unintentionally enabling when upgrading to new version
-        C_FIX_ERROR: false
+        - name: EditorConfig-Action
+          uses: FarzamMohammadi/EditorConfig-Action@master
+          env:
+              # Only lint files changed in pull request
+              ALWAYS_LINT_ALL_FILES: false
+              # Automatic error fixing not yet supported by EditorConfig-Action
+              # Forced off to avoid unintentionally enabling when upgrading to new version
+              C_FIX_ERROR: false

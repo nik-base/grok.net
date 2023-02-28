@@ -1,26 +1,25 @@
 name: Push PowerShell module
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+    workflow_dispatch:
+    release:
+        types: [published]
 
 jobs:
-  
-  publish:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
+    publish:
+        runs-on: windows-latest
+        steps:
+        - uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 7.0.x
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+              dotnet-version: 7.0.x
 
-    - name: Restore tools
-      run: dotnet tool restore
+        - name: Restore tools
+          run: dotnet tool restore
 
-    - name: Cake Action
-      run: dotnet cake ./build.cake --Target PsModulePush
-      env:
-          PS_NUGET_API_KEY: ${{ secrets.PS_NUGET_API_KEY }}
+        - name: Cake Action
+          run: dotnet cake ./build.cake --Target PsModulePush
+          env:
+              PS_NUGET_API_KEY: ${{ secrets.PS_NUGET_API_KEY }}
